@@ -1,0 +1,55 @@
+<html>
+
+<head>
+  <script>
+    // TODO: don't hard code this
+    const CST_ENV = 'http://localhost:3001';
+
+    function setIframeSrc() {
+      const id = document.getElementById('identity-id-input').value;
+      document.getElementById('cst-iframe').src = `${CST_ENV}/ui/customers/profile/${id}`;
+    };
+    
+    (function () {
+      window.addEventListener('message', e => {
+        if (e.origin === CST_ENV) {
+          console.log('received message: ', e.data);
+        }
+      });
+    })();
+  </script>
+  <style>
+    code {
+      font-family: Consolas, "courier new";
+      color: crimson;
+      background-color: #f1f1f1;
+      padding: 2px;
+    }
+
+    .container {
+      display: flex;
+      height: 90%;;
+    }
+
+    iframe {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+  <p>iFrame will only work if you login to CST first</p>
+  <p>
+    <input id="identity-id-input" />
+    <button onclick="setIframeSrc()">Go</button>
+  </p>
+  
+  <div class="container">
+    <iframe id="cst-iframe" src="http://localhost:3001/ui/customers/search" title="CST Internal"></iframe>
+    <!-- <iframe src="http://localhost:3001/ui/customers/profile/7b2e7693-00dc-4edc-bc0b-d6c8ae19d421" title="CST Internal"></iframe> -->
+  </div>  
+
+</body>
+
+</html>
